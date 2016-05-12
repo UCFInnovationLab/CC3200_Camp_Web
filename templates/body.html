@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+{% block body %}
+    <script>
+        var total = {{ total_connections | safe }},
+            known = {{ known_connections | safe }},
+            unknown = {{ unknown_connections | safe }};
+    </script>
+    <div id="current_box">
+                <a href="/"><h4>Pyfi Monitor</h4></a>
+        </div>
+    <div class="container">
+        
+        <div class="row" id='top-row'>
+                <div class="three columns">
+                    <p class='bold-uppercase' id="connections">Latest Connections</p>
+                    <p id="timesince" title="{{ time }}">{{ time }}</p>
+                </div>
+                <div class="three columns"><p id="total">Total: {{ total }}</p></div>
+                <div class="three columns"><p id="known">Known: {{ known }}</p></div>
+                <div class="three columns"><p id="unknown">Unkown: {{ unknown }}</p></div>
+            </div>
+        <div class="row">
+            <div class="four columns">
+                <p class='bold-uppercase inline'>FROM </p><p class="inline"><span class='time'>{{ startdate }}</span></p><br>
+                <p class='bold-uppercase inline'>UNTIL </p><p class="inline"><span class='time'>{{ enddate }}</span></p>
+            </div>
+            <div class="four columns"><p>Total Unique Mac Addresses: {{ uniques }}</p></div>
+            <div class="four columns u-pull-right">
+                <form action="">
+                    <input readonly type="text" id="dateselect" name="daterange" id="daterange" placeholder="Select Date Range">
+                    <input type="button" id="daterangequery" class="button-primary" value="Update">
+                </form>
+            </div>
+        </div>
+        <div class="row">
+                <canvas id="myChart"></canvas>
+            
+            
+        </div>
+    </div>
+
+{% endblock %}                              
