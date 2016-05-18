@@ -34,6 +34,12 @@ function time_to_local(time_element) {
     time_element.innerHTML = localTime;
 }
 
+function time_to_local_simple(time_element) {
+    var time = time_element.innerHTML;
+    var localTime  = Kalendae.moment.utc(time).local().format('MM/DD/YYYY');
+    time_element.innerHTML = localTime;
+}
+
 function time_since_local(time_element) {
     // set element title to actual time and set innerHTML to time since
     var timeInnerHTML = time_element.innerHTML;
@@ -44,9 +50,11 @@ function time_since_local(time_element) {
     time_element.title = localTime;
 }
 
-var timesince = document.getElementById('timesince');
-
-time_since_local(timesince);
+var timesince = document.getElementsByClassName('timesince');
+for(var i = 0; i < timesince.length; i++)
+{
+   time_since_local(timesince[i])
+}
 
 
 
@@ -56,7 +64,11 @@ for(var i = 0; i < timeList.length; i++)
    time_to_local(timeList[i])
 }
 
-
+var timeSimpleList = document.getElementsByClassName('time_simple');
+for(var i = 0; i < timeSimpleList.length; i++)
+{
+   time_to_local_simple(timeSimpleList[i])
+}
 
 
 

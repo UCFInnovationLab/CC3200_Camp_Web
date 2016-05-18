@@ -13,12 +13,12 @@
         <div class="row" id='top-row'>
                 <div class="three columns">
                     <p class='bold-uppercase' id="connections">Latest Connections</p>
-                    <p id="timesince" title="{{ time }}">{{ time }}</p>
+                    <p class="timesince" title="{{ time }}">{{ time }}</p>
                 </div>
                 <div class="three columns"><p id="total">Total: {{ total }}</p></div>
                 <div class="three columns"><p id="known">Known: {{ known }}</p></div>
-                <div class="three columns"><p id="unknown">Unkown: {{ unknown }}</p></div>
-            </div>
+                <div class="three columns"><p id="unknown" title="Devices with no discernable MAC Address">Unkown: {{ unknown }}</p></div>
+        </div>
         <div class="row">
             <div class="four columns">
                 <p class='bold-uppercase inline'>FROM </p><p class="inline"><span class='time'>{{ startdate }}</span></p><br>
@@ -37,6 +37,44 @@
             
             
         </div>
+        <table>
+            {% if latest %}
+            <caption>Latest Connected Devices</caption>
+            <tr>
+                <th>MAC Address</th>
+                <th>IP Address</th>
+                <th>Vendor</th>
+                <th>Last Seen</th>
+            </tr>
+            {% for key, value in macs_vendors.iteritems() %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value[0] }}</td>
+                <td>{{ value[1] }}</td>
+                <td class="timesince" title="{{ value[1] }}">{{ value[2] }}</td>
+            </tr>
+            {% endfor %}
+            {% else %}
+            <caption>Connected Devices <p class="inline"><span class='time_simple'>{{ startdate }}</span></p> - <p class="inline"><span class='time_simple'>{{ enddate }}</span></p></caption>
+            
+
+            <tr>
+                <th>MAC Address</th>
+                <th>IP Address</th>
+                <th>Vendor</th>
+                <th>Last Seen</th>
+            </tr>
+            {% for key, value in macs_vendors.iteritems() %}
+            <tr>
+                <td>{{ key }}</td>
+                <td>{{ value[0] }}</td>
+                <td>{{ value[1] }}</td>
+                <td class="time_simple" title="{{ value[1] }}">{{ value[2] }}</td>
+            </tr>
+            {% endfor %}
+            {% endif %}
+            
+        </table>
     </div>
 
 {% endblock %}                              

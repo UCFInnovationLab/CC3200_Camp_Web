@@ -32,16 +32,25 @@ def main():
     total, update_time = TOTAL_CONNECTIONS.current_value()
     known = KNOWN_CONNECTIONS.current_value()[0]
     unknown = UNKNOWN_CONNECTIONS.current_value()[0]
-    total_connections = TOTAL_CONNECTIONS.stream.values(start=start, end=end)
-    known_connections = KNOWN_CONNECTIONS.stream.values(start=start, end=end)
-    unknown_connections = UNKNOWN_CONNECTIONS.stream.values(start=start, end=end)
 
-    number_of_uniques, startdate, enddate = MACS.unique_macs(start=start, end=end)
+    if start:
+        limit = 10000
+    else:
+        limit = 300
+
+    total_connections = TOTAL_CONNECTIONS.stream.values(start=start, end=end, limit=limit)
+    known_connections = KNOWN_CONNECTIONS.stream.values(start=start, end=end, limit=limit)
+    unknown_connections = UNKNOWN_CONNECTIONS.stream.values(start=start, end=end, limit=limit)
+
+    number_of_uniques, startdate, enddate = MACS.unique_macs(start=start, end=end, limit=limit)
+    macs_vendors, latest = MACS.macs_vendors(start=start, end=end, limit=limit)
 
 
-    return render_template('body.html', total=int(total), known=int(known), unknown=int(unknown), time=update_time,
-                           uniques=number_of_uniques, startdate=startdate, enddate=enddate, 
-                           total_connections=json.dumps(total_connections), known_connections=json.dumps(known_connections),
+    return render_template('body.html', total=int(total), known=int(known), unknown=int(unknown),
+                           time=update_time, uniques=number_of_uniques, macs_vendors=macs_vendors,
+                           latest=latest, startdate=startdate, enddate=enddate,
+                           total_connections=json.dumps(total_connections),
+                           known_connections=json.dumps(known_connections),
                            unknown_connections=json.dumps(unknown_connections))
 
 if __name__ == "__main__":

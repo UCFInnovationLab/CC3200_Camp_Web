@@ -59,3 +59,13 @@ div#top-row {
 #unknown:before {
         background:#448CE5;          
 }
+
+table {
+    width:100%;
+    margin-top:10px;
+}
+
+table caption {
+    font-size: 1.6em;
+    font-weight: bold;
+}

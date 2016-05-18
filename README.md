@@ -10,7 +10,7 @@ An example running on Heroku can be found here: https://pyfi.herokuapp.com
 * Basic Python knowledge.
 * [Pip](https://pypi.python.org/pypi/pip) to resolve dependencies
 * Recommended:
-* Installed Python and Virtualenv in a unix-style environment. [See this guide for guidance.](http://docs.python-guide.org/en/latest/starting/install/osx/)
+  * Installed Python and Virtualenv in a unix-style environment. [See this guide for guidance.](http://docs.python-guide.org/en/latest/starting/install/osx/)
 
 
 ## Dependencies
