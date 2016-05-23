@@ -1,12 +1,11 @@
 import os
 import json
-from datetime import datetime
 
 
 from flask import Flask, request, render_template
 from m2x.client import M2XClient
 
-from models import StreamParser, NumericStreamParser, MacStreamParser
+from models import NumericStreamParser, MacStreamParser
 from utils import get_device
 
 
@@ -20,9 +19,10 @@ DEVICE = get_device(DEVICE_NAME, CLIENT)
 
 MACS = MacStreamParser(DEVICE.stream('mac_addresses'))
 
-TOTAL_CONNECTIONS = StreamParser(DEVICE.stream('total_connections'))
-KNOWN_CONNECTIONS = StreamParser(DEVICE.stream('number_mac_addresses'))
-UNKNOWN_CONNECTIONS = StreamParser(DEVICE.stream('number_unknown_connections'))
+TOTAL_CONNECTIONS = NumericStreamParser(DEVICE.stream('total_connections'))
+KNOWN_CONNECTIONS = NumericStreamParser(DEVICE.stream('number_mac_addresses'))
+UNKNOWN_CONNECTIONS = NumericStreamParser(
+    DEVICE.stream('number_unknown_connections'))
 
 
 @app.route("/", methods=['GET'])
@@ -35,19 +35,35 @@ def main():
 
     if start:
         limit = 10000
+        latest = False
     else:
         limit = 300
+        latest = True
 
-    total_connections = TOTAL_CONNECTIONS.stream.values(start=start, end=end, limit=limit)
-    known_connections = KNOWN_CONNECTIONS.stream.values(start=start, end=end, limit=limit)
-    unknown_connections = UNKNOWN_CONNECTIONS.stream.values(start=start, end=end, limit=limit)
+    total_connections = TOTAL_CONNECTIONS.stream.values(start=start,
+                                                        end=end,
+                                                        limit=limit
+                                                        )
+    known_connections = KNOWN_CONNECTIONS.stream.values(start=start,
+                                                        end=end,
+                                                        limit=limit
+                                                        )
+    unknown_connections = UNKNOWN_CONNECTIONS.stream.values(start=start,
+                                                            end=end,
+                                                            limit=limit
+                                                            )
+    MACS.set_stream_values(start=start,
+                           end=end,
+                           limit=limit)
+    number_of_uniques, startdate, enddate = MACS.unique_macs(start=start,
+                                                             end=end
+                                                             )
+    macs_vendors = MACS.macs_vendors(start=start)
 
-    number_of_uniques, startdate, enddate = MACS.unique_macs(start=start, end=end, limit=limit)
-    macs_vendors, latest = MACS.macs_vendors(start=start, end=end, limit=limit)
-
-
-    return render_template('body.html', total=int(total), known=int(known), unknown=int(unknown),
-                           time=update_time, uniques=number_of_uniques, macs_vendors=macs_vendors,
+    return render_template('body.html', total=int(total), known=int(known),
+                           unknown=int(unknown), time=update_time,
+                           uniques=number_of_uniques,
+                           macs_vendors=macs_vendors,
                            latest=latest, startdate=startdate, enddate=enddate,
                            total_connections=json.dumps(total_connections),
                            known_connections=json.dumps(known_connections),

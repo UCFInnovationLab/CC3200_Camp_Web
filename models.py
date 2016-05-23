@@ -1,9 +1,7 @@
 import json
-from datetime import datetime
 
-from m2x.utils import to_utc
+from utils import rounded_unicode
 
-from utils import rounded_unicode, to_datetime
 
 class StreamParser(object):
 
@@ -11,14 +9,11 @@ class StreamParser(object):
         self.stream = stream
 
     def current_value(self):
-        '''
+        """
         Return current value and time.
-        '''
+        """
         current_value = self.stream.values(limit=1)['values'][0]
         return current_value['value'], current_value['timestamp']
-
-    def get_timestamps(self, start=None, end=None):
-        pass
 
 
 class NumericStreamParser(StreamParser):
@@ -42,9 +37,6 @@ class NumericStreamParser(StreamParser):
         return rounded_unicode(self.max)
 
     def call_stats(self):
-        ''' 
-        Stats for a given time period
-        '''
         return self.stream.stats()
 
 
@@ -52,24 +44,34 @@ class MacStreamParser(StreamParser):
 
     def __init__(self, stream):
         super(MacStreamParser, self).__init__(stream)
+        self.values = self.get_stream_values()
 
-    def unique_macs(self, start=None, end=None, limit=10000):
-        '''
+    def get_stream_values(self, start=None, end=None, limit=10000):
+        # M2X can return a maximum of 10000 data points in one simple request
+        return self.stream.values(start=start, end=end, limit=limit)
+
+    def set_stream_values(self, start=None, end=None, limit=10000):
+        # M2X can return a maximum of 10000 data points in one simple request
+        self.values = self.stream.values(start=start, end=end, limit=limit)
+
+    def current_value(self):
+        return self.stream.values(limit=1)
+
+    def unique_macs(self, start=None, end=None):
+        """
         Return the number of unique MAC addresses that had connected
         to the WiFi network during the time between start and end.
 
         Start and End in ISO-8601 format.
-        '''
-        # M2X can return a maximum of 10000 data points in one simple request
-        values = self.stream.values(start=start, end=end, limit=limit)
+        """
+        # M2X will return the time of the request as the end time if none is
+        # specified
+        endtime = self.values['end']
 
-        # M2X will return the time of the request as the end time if none is specified
-        endtime = values['end']
-
-        if values['values']:
+        if self.values['values']:
             uniques = set()
 
-            for value in values['values']:
+            for value in self.values['values']:
                 macs_list = json.loads(value['value'])
                 for connect in macs_list:
                     uniques.add(connect[1])
@@ -77,7 +79,7 @@ class MacStreamParser(StreamParser):
             number_uniques = len(uniques)
 
             if start is None:
-                starttime = values['values'][-1]['timestamp']
+                starttime = self.values['values'][-1]['timestamp']
             else:
                 starttime = start
 
@@ -90,20 +92,20 @@ class MacStreamParser(StreamParser):
             starttime = start
             return 0, starttime, endtime
 
-    def macs_vendors(self, start=None, end=None, limit=10000):
-        '''
-        Return a dictionary with MAC addresses who have connected to Pyfi, the last time they
-        connected and their vendor if known.
+    def macs_vendors(self, start=None):
+        """
+        Return a dictionary with MAC addresses who have connected to Pyfi, the
+        last time they connected and their vendor if known.
+
+        Returns either the most recent info or info for a given range.
 
         Start and End in ISO-8601 format.
-        '''
+        """
         # M2X can return a maximum of 10000 data points in one simple request
         if start:
-            values = self.stream.values(start=start, end=end, limit=limit)
-            latest = False
+            values = self.values
         else:
-            values = self.stream.values(limit=1)
-            latest = True
+            values = self.current_value()
 
         if values['values']:
             mac_addresses = {}
@@ -113,6 +115,8 @@ class MacStreamParser(StreamParser):
                 macs_list = json.loads(value['value'])
                 for connect in macs_list:
                     if connect[1] not in mac_addresses:
-                        mac_addresses[connect[1]] = [connect[0], connect[2], time]
+                        mac_addresses[connect[1]] = [connect[0],
+                                                     connect[2],
+                                                     time]
 
-        return mac_addresses, latest
+        return mac_addresses
