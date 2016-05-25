@@ -1,5 +1,5 @@
 # Sample App to Display Data from a PyFi Monitor
-A small Python based Flask app that displays data from a [PyFi monitoring station](https://github.com/attm2x/pyfi-monitor-m2x/) and can be easily deployed on Heroku. This sample app pulls data from [AT&T's M2X](http://m2x.att.com).
+A small Python based Flask app that displays data from a [PyFi monitoring station](https://github.com/attm2x/pyfi-monitor-m2x/) and can be easily deployed on Heroku. This sample app pulls data from [AT&T M2X](http://m2x.att.com).
 
 An example running on Heroku can be found here: https://pyfi.herokuapp.com
 
