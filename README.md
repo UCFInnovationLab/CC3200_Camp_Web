@@ -3,10 +3,12 @@ A small Python based Flask app that displays data from a [PyFi monitoring statio
 
 An example running on Heroku can be found here: https://pyfi.herokuapp.com
 
+![App Screenshot](assets/screenshot.png)
+
 ## What you need
 * A free [Heroku Account](https://signup.heroku.com/).
 * A free AT&T [M2X Account](https://m2x.att.com/signup).
-* An M2X Device set up to monitor connections a router (for an example, see: https://github.com/attm2x/pyfi-monitor-m2x/)
+* An M2X Device set up to monitor connections to a router (for an example, see: https://github.com/attm2x/pyfi-monitor-m2x/)
 * Basic Python knowledge.
 * [Pip](https://pypi.python.org/pypi/pip) to resolve dependencies
 * Recommended:
