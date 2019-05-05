@@ -43,7 +43,7 @@ div#top-row {
     font-size: .9em;
 }
 
-#temp1:before, #temp2:before, #temp3:before {
+#temp1:before, #temp2:before, #temp3:before, #temp4:before, #temp5:before, #temp6:before, #temp7:before, #temp8:before, #temp9:before {
         display:inline-block;        
         content: "";
         width:11px;
@@ -52,17 +52,15 @@ div#top-row {
         margin-right:5px;            
 }
 
-#temp1:before {
-        background:#A93226
-}
-
-#temp2:before {
-        background:#BCB433
-}
-
-#temp2:before {
-        background:#884EA0
-}
+#temp1:before { background:#A93226 }
+#temp2:before { background:#BCB433 }
+#temp3:before { background:#884EA0 }
+#temp4:before { background:#87D3C9 }
+#temp5:before { background:#2471A3 }
+#temp6:before { background:#2E86C1 }
+#temp7:before { background:#17A589 }
+#temp8:before { background:#138D75 }
+#temp9:before { background:#229954 }
 
 table {
     width:100%;

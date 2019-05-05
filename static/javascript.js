@@ -43,7 +43,13 @@ var makeData = function(name, color, m2x_data){
 
 var data = [makeData('Name1', '#A93226', temp1), 
              makeData('Name2', '#CB4335', temp2),
-             makeData('Name3', '#884EA0', temp3)
+             makeData('Name3', '#884EA0', temp3),
+             makeData('Name4', '#7D3C98', temp4),
+             makeData('Name5', '#2471A3', temp5),
+             makeData('Name6', '#2E86C1', temp6),
+             makeData('Name7', '#17A589', temp7),
+             makeData('Name8', '#138D75', temp8),
+             makeData('Name9', '#229954', temp9)
              ];
 
 var ctx = document.getElementById("myChart").getContext("2d");
