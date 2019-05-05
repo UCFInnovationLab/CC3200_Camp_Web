@@ -2,7 +2,8 @@
 {% block body %}
     <script>
         var temp1 = {{ temp1_stream | safe }},
-            temp2 = {{ temp2_stream | safe }};
+            temp2 = {{ temp2_stream | safe }},
+            temp3 = {{ temp3_stream | safe }};
     </script>
     <div id="current_box">
                 <a href="/"><h4>TI Innovation Lab CC3200 Monitor</h4></a>
@@ -14,12 +15,12 @@
                     <p class='bold-uppercase' id="connections">Latest Connections</p>
                     <p class="timesince" title="{{ time }}">{{ time }}</p>
                 </div>
-                <div class="three columns"><p id="temp1">Shey: {{ temp1 }}</p></div>
-                <div class="three columns"><p id="temp2">Mary: {{ temp2 }}</p></div>
-                <div class="three columns"><p id="temp3">Jane: {{ temp3 }}</p></div>
-                <div class="three columns"><p id="temp3">Jane: {{ temp3 }}</p></div>
-                <div class="three columns"><p id="temp3">Jane: {{ temp3 }}</p></div>
-                <div class="three columns"><p id="temp3">Jane: {{ temp3 }}</p></div>
+                <div class="three columns"><p id="temp1">Name1: {{ temp1 }}</p></div>
+                <div class="three columns"><p id="temp2">Name2: {{ temp2 }}</p></div>
+                <div class="three columns"><p id="temp3">Name3: {{ temp3 }}</p></div>
+                <div class="three columns"><p id="temp3">Name4: {{ temp3 }}</p></div>
+                <div class="three columns"><p id="temp3">Name5: {{ temp3 }}</p></div>
+                <div class="three columns"><p id="temp3">Name6: {{ temp3 }}</p></div>
         </div>
 
         <div class="row">

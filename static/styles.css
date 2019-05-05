@@ -43,7 +43,7 @@ div#top-row {
     font-size: .9em;
 }
 
-#temp1:before, #temp2:before, #temp2:before {
+#temp1:before, #temp2:before, #temp3:before {
         display:inline-block;        
         content: "";
         width:11px;
@@ -52,8 +52,16 @@ div#top-row {
         margin-right:5px;            
 }
 
+#temp1:before {
+        background:#A93226
+}
+
 #temp2:before {
-        background:#00EAC5;
+        background:#BCB433
+}
+
+#temp2:before {
+        background:#884EA0
 }
 
 table {

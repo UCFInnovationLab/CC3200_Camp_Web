@@ -21,7 +21,7 @@ document.getElementById('daterangequery').onclick = function() {
     else
     {
         var start = Kalendae.moment(dr[0], Kalendae.moment.isoFormat);
-        var end = Kalendae.moment(dr[1], Kalendae.moment.isoFormat);
+        var end = Kalendae.moment(dr[1], Kalendae.moment.isoFormat).add(1, 'days');
         var url =  window.location.protocol+ '//'+window.location.host +window.location.pathname  +"?start="+start.local().toISOString()+"&end="+end.local().toISOString();
         window.location.href = url;
     }
@@ -41,10 +41,10 @@ var makeData = function(name, color, m2x_data){
     return final_data;
 };
 
-var data = [makeData('Shey', '#A600FF', temp1), 
-             makeData('Mary', '#00EAC5', temp2),
+var data = [makeData('Name1', '#A93226', temp1), 
+             makeData('Name2', '#CB4335', temp2),
+             makeData('Name3', '#884EA0', temp3)
              ];
-
 
 var ctx = document.getElementById("myChart").getContext("2d");
 
@@ -61,7 +61,6 @@ new Chart(ctx).Scatter(data, {
         }],
     scaleFontFamily: "'Times New Roman', 'Times', serif"
 });
-
 
 
 
