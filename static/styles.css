@@ -43,7 +43,7 @@ div#top-row {
     font-size: .9em;
 }
 
-#total:before, #known:before, #unknown:before {
+#temp1:before, #temp2:before, #temp2:before {
         display:inline-block;        
         content: "";
         width:11px;
@@ -52,12 +52,8 @@ div#top-row {
         margin-right:5px;            
 }
 
-#known:before {
+#temp2:before {
         background:#00EAC5;
-}
-
-#unknown:before {
-        background:#448CE5;          
 }
 
 table {
