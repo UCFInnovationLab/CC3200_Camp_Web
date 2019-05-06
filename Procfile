@@ -1,1 +1,1 @@
-web: gunicorn pyfi:app --log-file=-
+web: gunicorn iot:app --log-file=-

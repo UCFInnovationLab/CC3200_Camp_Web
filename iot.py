@@ -32,7 +32,10 @@ TEMPERATURE_9 = NumericStreamParser(DEVICE.stream('Name9_t'))
 def main():
     start = request.args.get('start')
     end = request.args.get('end')
+
     temp1, update_time = TEMPERATURE_1.current_value()
+
+    temp1 = TEMPERATURE_1.current_value()[0]
     temp2 = TEMPERATURE_2.current_value()[0]
     temp3 = TEMPERATURE_3.current_value()[0]
     temp4 = TEMPERATURE_4.current_value()[0]
